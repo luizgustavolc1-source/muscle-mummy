@@ -1,0 +1,38 @@
+.dashboard-cards{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:20px;
+    margin-bottom:40px;
+}
+
+.dashboard-card{
+    background:white;
+    border-radius:18px;
+    padding:30px;
+    box-shadow:0 10px 30px rgba(0,0,0,.05);
+}
+
+.dashboard-card h3{
+    font-size:38px;
+    margin-bottom:10px;
+}
+
+.dashboard-card p{
+    color:#6b7280;
+}
+
+.blue h3{
+    color:#2563eb;
+}
+
+.green h3{
+    color:#16a34a;
+}
+
+.purple h3{
+    color:#7c3aed;
+}
+
+.orange h3{
+    color:#ea580c;
+}

@@ -1,0 +1,17 @@
+.stats {
+    display: flex;
+    justify-content: center;
+    gap: 100px;
+    padding: 80px 20px;
+    text-align: center;
+  }
+  
+  .stats h2 {
+    font-size: 42px;
+    color: #2563eb;
+    margin-bottom: 10px;
+  }
+  
+  .stats p {
+    color: #6b7280;
+  }
