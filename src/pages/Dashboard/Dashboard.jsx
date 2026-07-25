@@ -1,20 +1,4 @@
-import Sidebar from "../../components/dashboard/Sidebar";
-import Topbar from "../../components/dashboard/Topbar";
-import DashboardCards from "../../components/dashboard/DashboardCards";
-import RecentClients from "../../components/dashboard/RecentClients";
-
-import "./Dashboard.css";
-
-export default function Dashboard() {
-  return (
-    <div className="dashboard-layout">
-      <Sidebar />
-
-      <div className="dashboard-main">
-        <Topbar />
-        <DashboardCards />
-        <RecentClients />
-      </div>
-    </div>
-  );
-}
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { supabase } from "../../lib/supabase";
+export default function Dashboard(){const [clients,setClients]=useState([]);const [checkins,setCheckins]=useState([]);useEffect(()=>{Promise.all([supabase.from("clients").select("id,full_name,goal,status,created_at").order("created_at",{ascending:false}),supabase.from("checkins").select("id,created_at").order("created_at",{ascending:false})]).then(([c,k])=>{setClients(c.data??[]);setCheckins(k.data??[])})},[]);return <section className="page"><div className="page-head"><div><h1>Dashboard</h1><p className="page-sub">Your coaching overview.</p></div><Link className="primary" to="/clients">Manage clients</Link></div><div className="stats"><article className="card stat"><span>Active clients</span><strong>{clients.filter(c=>c.status!=="Inactive").length}</strong></article><article className="card stat"><span>Check-ins received</span><strong>{checkins.length}</strong></article><article className="card stat"><span>New clients</span><strong>{clients.filter(c=>new Date(c.created_at)>new Date(Date.now()-30*864e5)).length}</strong></article></div><section className="card table-card"><div className="page-head" style={{padding:"20px 20px 0",marginBottom:0}}><div><h2>Recent clients</h2><p className="page-sub">Latest additions to your roster.</p></div><Link to="/clients">View all</Link></div>{clients.length?<table className="table"><thead><tr><th>Client</th><th>Goal</th><th>Status</th></tr></thead><tbody>{clients.slice(0,6).map(c=><tr key={c.id}><td><Link className="name-link" to={`/clients/${c.id}`}>{c.full_name}</Link></td><td>{c.goal||"—"}</td><td><span className="badge">{c.status||"Active"}</span></td></tr>)}</tbody></table>:<div className="empty">Add your first client to start working.</div>}</section></section>}
