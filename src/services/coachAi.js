@@ -5,7 +5,11 @@ export async function generateCoachDraft(type, client) {
     body: { type, client },
   });
 
-  if (error) throw error;
-  if (!data?.text) throw new Error("The AI generator did not return a draft.");
+  if (error) {
+    const errorBody = await error.context?.clone?.().json?.().catch(() => null);
+    throw new Error(errorBody?.error || error.message || "The AI request failed.");
+  }
+
+  if (!data?.text) throw new Error(data?.error || "The AI generator did not return a draft.");
   return data.text;
 }
