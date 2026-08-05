@@ -5,6 +5,7 @@ import Client from "./pages/Client/Client";
 import Clients from "./pages/Clients/Clients";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import Login from "./pages/Login/Login";
+import ResetPassword from "./pages/ResetPassword/ResetPassword";
 import { useSession } from "./services/session";
 
 function Protected({ children }) {
@@ -16,6 +17,7 @@ function Protected({ children }) {
 export default function App() {
   return <><Routes>
     <Route path="/login" element={<Login />} />
+    <Route path="/reset-password" element={<ResetPassword />} />
     <Route element={<Protected><AppShell /></Protected>}>
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/clients" element={<Clients />} />
