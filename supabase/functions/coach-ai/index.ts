@@ -37,10 +37,35 @@ Deno.serve(async (request) => {
       body: JSON.stringify({ model: "gpt-4.1-mini", input: prompt }),
     });
     const result = await aiResponse.json();
-    if (!aiResponse.ok) return Response.json({ error: result?.error?.message || "AI generation failed." }, { status: 502, headers: corsHeaders });
 
-    return Response.json({ text: result.output_text }, { headers: corsHeaders });
+    if (!aiResponse.ok) {
+      const message = result?.error?.message || "AI generation failed.";
+      console.error("OpenAI API error", {
+        status: aiResponse.status,
+        type: result?.error?.type,
+        code: result?.error?.code,
+        message,
+      });
+      return Response.json({ error: message }, { status: 502, headers: corsHeaders });
+    }
+
+    // `output_text` is an SDK convenience property. This function uses REST,
+    // so collect generated text from the output array.
+    const text = (result?.output ?? [])
+      .flatMap((item: { content?: Array<{ type?: string; text?: string }> }) => item.content ?? [])
+      .filter((part: { type?: string }) => part.type === "output_text")
+      .map((part: { text?: string }) => part.text ?? "")
+      .join("\n")
+      .trim();
+
+    if (!text) {
+      console.error("OpenAI returned no text output", { responseId: result?.id });
+      return Response.json({ error: "The AI returned no text. Please try again." }, { status: 502, headers: corsHeaders });
+    }
+
+    return Response.json({ text }, { headers: corsHeaders });
   } catch (error) {
+    console.error("Coach AI function error", error);
     return Response.json({ error: error.message || "AI generation failed." }, { status: 500, headers: corsHeaders });
   }
 });
