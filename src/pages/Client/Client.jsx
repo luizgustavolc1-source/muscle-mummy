@@ -55,9 +55,9 @@ export default function Client() {
     try {
       setDraft(await generateCoachDraft(type, client));
       toast.success("Draft generated");
-    } catch {
+    } catch (error) {
       setDraft(type === "workout" ? fallbackWorkout(client) : fallbackNutrition(client));
-      toast.info("AI is not connected yet — showing a coaching draft instead.");
+      toast.error(error.message || "The AI generator could not complete this request.");
     } finally { setGenerating(false); }
   }
 
