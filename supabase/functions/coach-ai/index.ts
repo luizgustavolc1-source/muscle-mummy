@@ -36,7 +36,7 @@ Deno.serve(async (request) => {
 
     const focus = type === "workout" ? "workout programme" : "nutrition plan";
     const transcript = isSecretary
-      ? messages.slice(-12).map((message: { role?: string; text?: string }) => `${message.role === "assistant" ? "Secretary" : "Coach"}: ${String(message.text || "").slice(0, 2000)}`).join("\n\n")
+      ? messages.slice(-40).map((message: { role?: string; text?: string }) => `${message.role === "assistant" ? "Secretary" : "Coach"}: ${String(message.text || "").slice(0, 2000)}`).join("\n\n")
       : "";
     const prompt = isSecretary
       ? `You are the private AI Secretary for a personal trainer using Muscle Mummy. Help with coaching administration, clear client messages, follow-up notes, weekly priorities and practical business organisation. Use Australian English. Keep answers concise, helpful and professional. Never claim to have sent messages or changed client records.\n\nConversation:\n${transcript}`
