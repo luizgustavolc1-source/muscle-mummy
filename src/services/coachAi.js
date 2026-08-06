@@ -12,8 +12,8 @@ async function invokeCoachAi(body) {
   return data.text;
 }
 
-export function generateCoachDraft(type, client) {
-  return invokeCoachAi({ type, client });
+export function generateCoachDraft(type, clientId, adjustments = []) {
+  return invokeCoachAi({ type, clientId, adjustments });
 }
 
 export function askAiSecretary(messages) {
