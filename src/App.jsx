@@ -6,6 +6,7 @@ import Clients from "./pages/Clients/Clients";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import Login from "./pages/Login/Login";
 import ResetPassword from "./pages/ResetPassword/ResetPassword";
+import AiSecretary from "./pages/AiSecretary/AiSecretary";
 import { useSession } from "./services/session";
 
 function Protected({ children }) {
@@ -22,6 +23,7 @@ export default function App() {
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/clients" element={<Clients />} />
       <Route path="/clients/:id" element={<Client />} />
+      <Route path="/ai-secretary" element={<AiSecretary />} />
     </Route>
     <Route path="/" element={<Navigate to="/dashboard" replace />} />
     <Route path="*" element={<Navigate to="/dashboard" replace />} />
