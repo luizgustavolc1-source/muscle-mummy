@@ -7,6 +7,7 @@ import Dashboard from "./pages/Dashboard/Dashboard";
 import Login from "./pages/Login/Login";
 import ResetPassword from "./pages/ResetPassword/ResetPassword";
 import AiSecretary from "./pages/AiSecretary/AiSecretary";
+import Calendar from "./pages/Calendar/Calendar";
 import { useSession } from "./services/session";
 
 function Protected({ children }) {
@@ -24,6 +25,7 @@ export default function App() {
       <Route path="/clients" element={<Clients />} />
       <Route path="/clients/:id" element={<Client />} />
       <Route path="/ai-secretary" element={<AiSecretary />} />
+      <Route path="/calendar" element={<Calendar />} />
     </Route>
     <Route path="/" element={<Navigate to="/dashboard" replace />} />
     <Route path="*" element={<Navigate to="/dashboard" replace />} />
